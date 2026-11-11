@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="A simple browser-based flashcard manager and study application.">
+  <title>Simple Flashcards</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="app-header">
+    <div>
+      <p class="eyebrow">Study smarter</p>
+      <h1>Simple Flashcards</h1>
+      <p class="subtitle">Create, edit, delete, search, and review your cards.</p>
+    </div>
+    <button id="themeButton" class="secondary-button" type="button" aria-label="Toggle dark mode">Dark mode</button>
+  </header>
+
+  <main class="layout">
+    <section class="panel editor-panel" aria-labelledby="formTitle">
+      <h2 id="formTitle">Add a flashcard</h2>
+      <form id="flashcardForm">
+        <input id="cardId" type="hidden">
+
+        <label for="question">Question</label>
+        <textarea id="question" rows="4" maxlength="300" required placeholder="Example: What is the meaning of 改善?"></textarea>
+
+        <label for="answer">Answer</label>
+        <textarea id="answer" rows="5" maxlength="600" required placeholder="Example: Improvement / Kaizen"></textarea>
+
+        <label for="category">Category</label>
+        <input id="category" type="text" maxlength="50" placeholder="Example: JLPT N2">
+
+        <div class="form-actions">
+          <button id="saveButton" class="primary-button" type="submit">Add card</button>
+          <button id="cancelEditButton" class="secondary-button hidden" type="button">Cancel edit</button>
+        </div>
+      </form>
+      <p id="formMessage" class="message" role="status" aria-live="polite"></p>
+    </section>
+
+    <section class="panel cards-panel" aria-labelledby="cardsTitle">
+      <div class="section-heading">
+        <div>
+          <h2 id="cardsTitle">Your flashcards</h2>
+          <p id="cardCount" class="muted">0 cards</p>
+        </div>
+        <button id="studyButton" class="primary-button" type="button">Study cards</button>
+      </div>
+
+      <div class="toolbar">
+        <label class="sr-only" for="searchInput">Search flashcards</label>
+        <input id="searchInput" type="search" placeholder="Search questions, answers, or categories">
+        <select id="categoryFilter" aria-label="Filter by category">
+          <option value="all">All categories</option>
+        </select>
+      </div>
+
+      <div id="emptyState" class="empty-state">
+        <h3>No flashcards yet</h3>
+        <p>Add your first card using the form.</p>
+      </div>
+      <div id="cardList" class="card-list" aria-live="polite"></div>
+    </section>
+  </main>
+
+  <dialog id="studyDialog" class="study-dialog">
+    <div class="study-header">
+      <div>
+        <p id="studyProgress" class="muted">Card 1 of 1</p>
+        <h2>Study mode</h2>
+      </div>
+      <button id="closeStudyButton" class="icon-button" type="button" aria-label="Close study mode">×</button>
+    </div>
+
+    <button id="studyCard" class="study-card" type="button" aria-label="Flip flashcard">
+      <span id="studySide" class="study-side">Question</span>
+      <span id="studyText" class="study-text"></span>
+      <span class="flip-hint">Click to flip</span>
+    </button>
+
+    <div class="study-controls">
+      <button id="previousButton" class="secondary-button" type="button">Previous</button>
+      <button id="shuffleButton" class="secondary-button" type="button">Shuffle</button>
+      <button id="nextButton" class="primary-button" type="button">Next</button>
+    </div>
+  </dialog>
+
+  <template id="cardTemplate">
+    <article class="flashcard-item">
+      <div class="card-topline">
+        <span class="category-badge"></span>
+        <div class="card-actions">
+          <button class="edit-button secondary-button" type="button">Edit</button>
+          <button class="delete-button danger-button" type="button">Delete</button>
+        </div>
+      </div>
+      <h3 class="card-question"></h3>
+      <p class="card-answer"></p>
+    </article>
+  </template>
+
+  <script src="app.js"></script>
+</body>
+</html>
